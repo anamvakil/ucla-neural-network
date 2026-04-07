@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+venv/
+.env
+models/*.pkl
+data/
+logs/
+.ipynb_checkpoints/
+.DS_Store
+.vscode/
