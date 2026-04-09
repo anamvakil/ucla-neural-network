@@ -74,9 +74,9 @@ streamlit run app.py
 
 | Tab | Description |
 |---|---|
-| 📊 Data Overview | Dataset stats, GRE vs TOEFL scatter, admission rate |
-| 🧠 Train & Evaluate | Configure and train MLP, view loss curve, confusion matrix, CV scores, activation comparison |
-| 🔮 Predict | Enter student profile, get live admission prediction with confidence |
+|  Data Overview | Dataset stats, GRE vs TOEFL scatter, admission rate |
+|  Train & Evaluate | Configure and train MLP, view loss curve, confusion matrix, CV scores, activation comparison |
+|  Predict | Enter student profile, get live admission prediction with confidence |
 
 ---
 
