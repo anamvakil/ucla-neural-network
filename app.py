@@ -43,7 +43,7 @@ st.set_page_config(
 )
  
 st.title("UCLA Admission Prediction — Neural Network")
-st.caption("CST2216 — Business Intelligence System Infrastructure | Algonquin College")
+st.caption("Machine Learning | Algonquin College")
 st.markdown("---")
  
 @st.cache_data
