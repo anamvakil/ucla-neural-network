@@ -1,6 +1,6 @@
 # UCLA Admission Prediction — Neural Network
 
-**Course:** CST2216 — Business Intelligence System Infrastructure  
+**Course:** Machine Learning  
 **College:** Algonquin College  
 **Project:** Modularizing and Deploying ML Code (Week 12)
 
