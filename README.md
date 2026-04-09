@@ -82,4 +82,4 @@ streamlit run app.py
 
 ## Live Demo
 
-Deployed on Streamlit Cloud: **[INSERT LINK AFTER DEPLOYMENT]**
+Deployed on Streamlit Cloud: **[[https://ucla-anam.streamlit.app/]]**
