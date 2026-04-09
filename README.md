@@ -40,7 +40,7 @@ ucla-neural-network/
 ## Setup Instructions
 
 ```bash
-git clone https://github.com/<your-username>/ucla-neural-network.git
+git clone https://github.com/anamvakil/ucla-neural-network.git
 cd ucla-neural-network
 py -m venv venv
 venv\Scripts\activate
