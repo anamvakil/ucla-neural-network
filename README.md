@@ -1,16 +1,26 @@
-# UCLA Admission Prediction — Neural Network
+# UCLA Admission Neural Network Classifier
 
-**Course:** Machine Learning  
-**College:** Algonquin College  
-**Project:** Modularizing and Deploying ML Code (Week 12)
+**CST2216 — Modularising and Deploying ML Code | Algonquin College**
+
+A deployed neural network web application that predicts graduate admission outcomes for UCLA applicants based on academic profile features using scikit-learn's MLPClassifier. Built as part of a modular ML deployment project, converted from a Jupyter notebook into a production-ready Streamlit app.
+
+🔗 **Live App:** [ucla-anam.streamlit.app](https://ucla-anam.streamlit.app)
 
 ---
 
-## Project Overview
+## Overview
 
-Predicts the probability of a student being admitted to UCLA using a Multi-Layer Perceptron (MLP) neural network. The target variable `Admit_Chance` is binarised at a 0.80 threshold — students with ≥80% predicted chance are classified as admitted.
+This app uses a Multi-Layer Perceptron (MLP) classifier to predict whether a student is admitted to UCLA based on their academic profile. No TensorFlow or Keras dependency — the full neural network is implemented using scikit-learn's MLPClassifier, keeping deployment lightweight and cloud-friendly.
 
-**Success criterion:** test accuracy ≥ 90%.
+| Metric | Value |
+|---|---|
+| Algorithm | MLPClassifier (MLP Neural Network) |
+| Train Accuracy | 0.8525 |
+| Test Accuracy | 0.8100 |
+| CV Mean | 0.8375 |
+| CV Std Dev | 0.0262 |
+| Target Accuracy | 90% |
+| Status | Below target — tanh activation recommended |
 
 ---
 
@@ -18,68 +28,99 @@ Predicts the probability of a student being admitted to UCLA using a Multi-Layer
 
 ```
 ucla-neural-network/
-├── app.py                  # Streamlit application
-├── requirements.txt
-├── README.md
-├── .gitignore
+├── app.py                  # Streamlit entry point
+├── requirements.txt        # Dependencies (no pinned versions)
 ├── data/
-│   └── Admission.csv       # Raw dataset (add manually)
-├── models/                 # Saved .pkl files (auto-created)
-├── logs/                   # Runtime logs (auto-created)
+│   └── dataset.csv         # UCLA applicant records
 └── src/
     ├── __init__.py
-    ├── data_loader.py      # CSV loading and validation
-    ├── preprocessor.py     # Binarisation, encoding, scaling
-    ├── model.py            # MLP training, evaluation, activation comparison
-    ├── utils.py            # Logging, chart helpers, model persistence
-    └── pipeline.py         # CLI-runnable end-to-end orchestrator
+    ├── data_loader.py      # Loads and validates the dataset
+    ├── preprocessor.py     # Feature encoding and scaling
+    ├── model.py            # MLPClassifier training and evaluation
+    └── utils.py            # Shared helper functions
 ```
 
 ---
 
-## Setup Instructions
+## App Features
+
+**Tab 1 — Data Overview**
+- Dataset shape, sample rows and summary statistics
+- Feature distribution visualisations
+
+**Tab 2 — Train & Evaluate**
+- Adjustable hyperparameters: neurons per hidden layer, number of hidden layers, activation function, batch size, max iterations, admission threshold
+- One-click training pipeline with training complete confirmation
+- Accuracy metrics: train accuracy, test accuracy, CV mean and CV std dev
+- Confusion matrix visualisation
+- Training loss curve showing convergence across iterations
+- Automatic below-target warning when test accuracy falls under 90%
+
+**Tab 3 — Predict**
+- Input sliders for applicant academic profile features
+- Instant admission prediction from the trained MLP model
+- Admission probability output with adjustable threshold
+
+---
+
+## Tech Stack
+
+| Tool | Purpose |
+|---|---|
+| Streamlit | UI framework and cloud deployment |
+| scikit-learn | MLPClassifier neural network |
+| pandas / NumPy | Data loading and preprocessing |
+| Matplotlib / Seaborn | Confusion matrix, loss curve, scatter visualisation |
+| GitHub | Version control and auto-deploy trigger |
+
+---
+
+## Running Locally
 
 ```bash
-git clone https://github.com/anamvakil/ucla-neural-network.git
+git clone https://github.com/anamvakil/ucla-neural-network
 cd ucla-neural-network
-py -m venv venv
-venv\Scripts\activate
-py -m pip install -r requirements.txt
-```
-
-Place `Admission.csv` in the `data/` folder, then:
-
-```bash
+pip install -r requirements.txt
 streamlit run app.py
 ```
 
----
-
-## Dataset Features
-
-| Feature | Range | Description |
-|---|---|---|
-| GRE_Score | 0–340 | Graduate Record Exam score |
-| TOEFL_Score | 0–120 | English language test score |
-| University_Rating | 1–5 | Bachelor's university quality |
-| SOP | 1–5 | Statement of Purpose strength |
-| LOR | 1–5 | Letter of Recommendation strength |
-| CGPA | 0–10 | Undergraduate GPA |
-| Research | 0 / 1 | Research experience |
-| Admit_Chance | Target | Binarised at 0.80 threshold |
+> Requires Python 3.9 or higher. No TensorFlow installation needed.
 
 ---
 
-## Streamlit App Tabs
+## Key Technical Notes
 
-| Tab | Description |
+- **No TensorFlow dependency** — MLPClassifier from scikit-learn handles the full neural network; keeps requirements.txt lightweight and avoids cloud build failures
+- **Automatic accuracy warning** — app detects when test accuracy falls below 90% and displays a banner prompting hyperparameter adjustment
+- **tanh recommended over relu** — switching activation function is the primary recommendation to approach the 90% target
+- **No pinned versions** in `requirements.txt` — compatible with Streamlit Cloud's Python 3.14 runtime
+- **Pandas 2.x compatible** — all `inplace=True` calls replaced with explicit assignment syntax
+- **data/ folder committed to repo** — required for Streamlit Cloud to locate the CSV at runtime
+- `plt.close(fig)` called after every `st.pyplot()` call — resolves the infinite restart loop caused by matplotlib memory accumulation on Streamlit Cloud
+
+---
+
+## Dataset
+
+UCLA applicant dataset with student academic and profile features for binary admission classification. Preprocessed through the modular src/ pipeline with encoding and standard scaling applied before training.
+
+---
+
+## Results
+
+| Metric | Value |
 |---|---|
-|  Data Overview | Dataset stats, GRE vs TOEFL scatter, admission rate |
-|  Train & Evaluate | Configure and train MLP, view loss curve, confusion matrix, CV scores, activation comparison |
-|  Predict | Enter student profile, get live admission prediction with confidence |
+| Train Accuracy | 0.8525 |
+| Test Accuracy | 0.8100 |
+| CV Mean Accuracy | 0.8375 |
+| CV Std Dev | 0.0262 |
+
+Test accuracy of 81% falls below the 90% target. The low CV standard deviation (0.0262) confirms the model is stable and generalising consistently — the gap is a tuning issue, not overfitting. Switching from relu to tanh activation is the recommended next step.
 
 ---
 
-## Live Demo
+## Author
 
-Deployed on Streamlit Cloud: **[[https://ucla-anam.streamlit.app/]]**
+**Anam Vakil**  
+BISI Graduate Certificate — Algonquin College  
+[github.com/anamvakil](https://github.com/anamvakil)
